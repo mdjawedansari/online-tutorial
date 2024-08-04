@@ -39,7 +39,7 @@ const AdminDashboard = () => {
       <div className="mb-6">
         <h2 className="text-xl font-bold mb-4">Manage Courses</h2>
         {/* Add course management functionality */}
-        <Link to='addcourse'>
+        <Link to='/addcourse'>
           <button className="bg-green-500 py-2 px-4 rounded">Add Course</button>
         </Link>
         

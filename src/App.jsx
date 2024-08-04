@@ -26,15 +26,15 @@ const App = () => {
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/courses" element={<Course />} />
-        {/* <Route path="/addcourse" element={<CreateCourse />} /> */}
+        <Route path="/addcourse" element={<CreateCourse />} />
         {/* <Route path="/admin-dashboard" element={ <AdminDashboard />} /> */}
-        <Route path="/admin-dashboard/addcourse" element={
+        {/* <Route path="/admin-dashboard/addcourse" element={
           isAuthenticated && user.role === 'admin' ? (
             <CreateCourse />
           ) : (
             toast.error("Unauthorize")
           )
-        } />
+        } /> */}
         <Route path="/admin-dashboard" element={
           isAuthenticated && user.role === 'admin' ? (
             <AdminDashboard />
