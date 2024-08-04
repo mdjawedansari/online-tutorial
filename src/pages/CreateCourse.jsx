@@ -32,7 +32,12 @@ const CreateCourse = () => {
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setThumbnail(URL.createObjectURL(file)); // For previewing the image
+      // setThumbnail(URL.createObjectURL(file)); // For previewing the image
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnail(reader.result); // Store the base64 data of the thumbnail
+      };
+      reader.readAsDataURL(file);
     }
   };
 

@@ -29,7 +29,7 @@ const Course = () => {
             <p>{course.description}</p>
             <p><strong>Category:</strong> {course.category}</p>
             <p><strong>Created By:</strong> {course.createdBy}</p>
-            <img src={course.thumbnail} alt={course.title} width="100" />
+            <img src={course.thumbnail} alt='image' width="100" />
             
           </li>
         ))}
