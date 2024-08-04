@@ -22,5 +22,14 @@
       "role": "user"
     }
   ],
-  "courses": []
+  "courses": [
+    {
+      "id": "e7d3",
+      "title": "khhkjdhkhgkdjh",
+      "description": "kjhfkjjkghjkhg",
+      "category": "kjrhkdjghkjgktj",
+      "createdBy": "kjfhjkhjrthnjht",
+      "thumbnail": "blob:http://localhost:5173/6268bc42-e99b-43cb-b45a-64f1b849cdb6"
+    }
+  ]
 }
