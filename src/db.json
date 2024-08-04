@@ -4,31 +4,23 @@
       "id": "d82e",
       "username": "arshu1234",
       "email": "arshu1234@gmail.com",
-      "password": "arshu"
+      "password": "arshu",
+      "role": "admin"
     },
     {
       "id": "9bb9",
       "username": "ejazali",
       "email": "ejazali@gmail.com",
-      "password": "ejazali"
+      "password": "ejazali",
+      "role": "user"
     },
     {
-      "id": "d57f",
-      "username": "ansari",
-      "email": "ansar@gmail.com",
-      "password": "Ansari@0"
-    },
-    {
-      "id": "9dc3",
-      "username": "Kucch",
-      "email": "kuchh@gmail.com",
-      "password": "Kuchhbhi@0"
-    },
-    {
-      "id": "6605",
-      "username": "Hihihihi",
-      "email": "hihihihih@gmail.com",
-      "password": "Hihihihih@0"
+      "id": "5c39",
+      "username": "Akhtar",
+      "email": "akhtar@gmail.com",
+      "password": "Akhtar@0",
+      "role": "user"
     }
-  ]
+  ],
+  "courses": []
 }

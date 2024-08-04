@@ -48,11 +48,12 @@ const Signup = () => {
     }),
     onSubmit: async (values) => {
       try {
+        const userData = { ...values, role: 'user' };
         // Store user data in db.json
-        await axios.post('http://localhost:5000/users', values);
+        await axios.post('http://localhost:5000/users', userData);
 
         // Save the current user in local storage for login purposes
-        localStorage.setItem('authData', JSON.stringify(values));
+        localStorage.setItem('authData', JSON.stringify(userData));
         toast.success('Registration successful!')
         navigate('/login');
       } catch (error) {
