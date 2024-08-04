@@ -2,8 +2,8 @@
   "users": [
     {
       "id": "d82e",
-      "username": "arshu123",
-      "email": "arshu123@gmail.com",
+      "username": "arshu1234",
+      "email": "arshu1234@gmail.com",
       "password": "arshu"
     },
     {
@@ -23,6 +23,12 @@
       "username": "Kucch",
       "email": "kuchh@gmail.com",
       "password": "Kuchhbhi@0"
+    },
+    {
+      "id": "6605",
+      "username": "Hihihihi",
+      "email": "hihihihih@gmail.com",
+      "password": "Hihihihih@0"
     }
   ]
 }

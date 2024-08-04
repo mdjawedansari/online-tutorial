@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/authSlice';
 import { FiUser } from 'react-icons/fi';
 import { useState } from 'react';
+import logo from '/src/assets/no-bg.png';
 import toast from 'react-hot-toast';
 
 const Home = () => {
@@ -21,7 +22,7 @@ const Home = () => {
       <div className="text-white h-[100vh] w-full bg-[#1D232E]">
         <div>
         <Link to="/">
-          <img className='h-full w-96 ' src="/src/assets/no-bg.png" alt="fggfd" />
+          <img className='h-full w-96 ' src={logo} alt="fggfd" />
         </Link>
         </div>
         <h1 className="text-2xl font-bold">Welcome to Our Website</h1>
