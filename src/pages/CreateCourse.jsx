@@ -25,7 +25,7 @@ const CreateCourse = () => {
       setDescription('');
       setCategory('');
       setCreatedBy('');
-      setThumbnail(null);
+      // setThumbnail(null);
     } catch (err) {
       toast.error('Failed to add course');
     }
