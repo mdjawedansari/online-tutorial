@@ -17,11 +17,11 @@ const Profile = () => {
     const updatedUser = { ...user, username, email };
 
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get('https://coding-pathshala.vercel.app/users');
       const users = response.data;
       const userId = users.find(u => u.email === user.email).id;
 
-      await axios.put(`http://localhost:5000/users/${userId}`, updatedUser);
+      await axios.put(`https://coding-pathshala.vercel.app/users/${userId}`, updatedUser);
 
       localStorage.setItem('authData', JSON.stringify(updatedUser));
       dispatch(updateProfile(updatedUser));
