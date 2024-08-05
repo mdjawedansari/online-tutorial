@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addCourse } from '../features/coursesSlice';
 import toast from 'react-hot-toast';
-import _ from 'lodash';
 
 const CreateCourse = () => {
   const dispatch = useDispatch();
@@ -25,33 +24,21 @@ const CreateCourse = () => {
       setDescription('');
       setCategory('');
       setCreatedBy('');
-      // setThumbnail(null);
+      
     } catch (err) {
       toast.error('Failed to add course');
     }
   };
-
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // setThumbnail(URL.createObjectURL(file)); // For previewing the image
       const reader = new FileReader();
       reader.onloadend = () => {
-        const result = reader.result;
-        const sortedResult = sortBase64String(result);
-        setThumbnail(sortedResult);
+        setThumbnail(reader.result); // Store the base64 data of the thumbnail
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const sortBase64String = (str) => {
-    const parts = str.split(',');
-    if (parts.length === 2) {
-      const base64 = parts[1];
-      const sortedBase64 = _.sortBy(base64).join('');
-      return `${parts[0]},${sortedBase64}`;
-    }
-    return str;
   };
 
   return (
@@ -85,6 +72,7 @@ const CreateCourse = () => {
         <input
           type="file"
           placeholder="Thumbnail URL"
+          
           onChange={handleThumbnailChange}
         />
         <button onClick={handleAddCourse}>Add Course</button>
