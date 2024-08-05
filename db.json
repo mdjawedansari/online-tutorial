@@ -1,4 +1,12 @@
 {
-  "users": [],
-  "courses":[]
+  "users": [
+    {
+      "id": "daac",
+      "username": "Jawed Akhtar",
+      "email": "jawed@gmail.com",
+      "password": "Jawed@0",
+      "role": "user"
+    }
+  ],
+  "courses": []
 }
