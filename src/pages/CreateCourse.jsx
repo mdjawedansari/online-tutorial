@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addCourse } from '../features/coursesSlice';
 import toast from 'react-hot-toast';
+import _ from 'lodash';
 
 const CreateCourse = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const CreateCourse = () => {
     const parts = str.split(',');
     if (parts.length === 2) {
       const base64 = parts[1];
-      const sortedBase64 = base64.split('').sort().join('');
+      const sortedBase64 = _.sortBy(base64).join('');
       return `${parts[0]},${sortedBase64}`;
     }
     return str;
