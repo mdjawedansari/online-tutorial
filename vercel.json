@@ -2,7 +2,7 @@
     "rewrites": [
     {
       "source": "/courses",
-      "destination": "/api/courses"
+      "destination": "/courses"
     }
   ],
     "headers": [
