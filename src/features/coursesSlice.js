@@ -5,8 +5,14 @@ const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 
 // Thunks
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
-  const response = await axios.get(apiUrl);
-  return response.data;
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+  // return response.data;
+  if (!Array.isArray(data)) {
+    throw new Error('Expected an array of courses');
+  }
+
+  return data;
 });
 
 export const addCourse = createAsyncThunk('courses/addCourse', async (course) => {
