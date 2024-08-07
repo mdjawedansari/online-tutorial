@@ -15,9 +15,9 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
     const data = await response.json(); // Parse JSON
     console.log("data:", data)
     // Validate that data is an array or object
-    if (typeof data !== 'object' || data === null) {
-      throw new Error('Response is not valid JSON');
-    }
+    // if (typeof data !== 'object' || data === null) {
+    //   throw new Error('Response is not valid JSON');
+    // }
     
     return data;
   } catch (error) {
