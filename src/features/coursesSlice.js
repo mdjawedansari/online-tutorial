@@ -1,28 +1,34 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const apiUrl = 'https://coding-pathshala.vercel.app/courses?_=' + new Date().getTime();
+const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 
 // Thunks
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
   try {
     const response = await axios.get(apiUrl);
-    console.log('fetchCourses response:', response);
-    console.log('fetchCourses data:', response.data);
-
-    // Validate and parse response data
+    console.log('Response:', response);
+    console.log('Response data:', response.data);
+    
+    // Check if response data is JSON
     if (typeof response.data !== 'object' || response.data === null) {
-      // In case the response is a string that needs to be parsed
+      // Attempt to parse response if it's a string
       try {
-        return JSON.parse(response.data);
+        return JSON.parse(JSON.stringify(response.data));
       } catch (e) {
         throw new Error('Response is not valid JSON');
       }
     }
     return response.data;
-    
+
   } catch (error) {
-    console.error('Error fetching courses:', error.message);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else {
+      console.error('Error message:', error.message);
+    }
     throw error;
   }
 });
@@ -30,21 +36,25 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
 export const addCourse = createAsyncThunk('courses/addCourse', async (course) => {
   try {
     const response = await axios.post(apiUrl, course);
-    console.log('addCourse response:', response);
-    console.log('addCourse data:', response.data);
+    console.log('Add Course Response:', response);
+    console.log('Add Course Data:', response.data);
 
-    // Validate and parse response data
-    if (typeof response.data !== 'object') {
-      // In case the response is a string that needs to be parsed
+    if (typeof response.data !== 'object' || response.data === null) {
       try {
-        return JSON.parse(response.data);
+        return JSON.parse(JSON.stringify(response.data));
       } catch (e) {
         throw new Error('Response is not valid JSON');
       }
     }
     return response.data;
   } catch (error) {
-    console.error('Error adding course:', error.message);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else {
+      console.error('Error message:', error.message);
+    }
     throw error;
   }
 });
@@ -52,10 +62,16 @@ export const addCourse = createAsyncThunk('courses/addCourse', async (course) =>
 export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (courseId) => {
   try {
     await axios.delete(`${apiUrl}/${courseId}`);
-    console.log('deleteCourse successful for ID:', courseId);
+    console.log('Delete Course successful for ID:', courseId);
     return courseId;
   } catch (error) {
-    console.error('Error deleting course:', error.message);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else {
+      console.error('Error message:', error.message);
+    }
     throw error;
   }
 });
