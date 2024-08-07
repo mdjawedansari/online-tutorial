@@ -8,6 +8,8 @@ const Course = () => {
   const courses = useSelector(state => state.courses.courses);
   const status = useSelector(state => state.courses.status);
   const error = useSelector(state => state.courses.error);
+  console.log(courses);
+  
 
   useEffect(() => {
     if (status === 'idle') {
@@ -23,7 +25,8 @@ const Course = () => {
       {status === 'loading' && <p>Loading...</p>}
       {status === 'failed' && <p>Error: {error}</p>}
       <ul>
-        {courses.map(course => (
+        { Array.isArray(courses) && courses.length > 0 ? (
+          courses.map((course) => (
           <li key={course.id}>
             <h2>{course.title}</h2>
             <p>{course.description}</p>
@@ -32,7 +35,9 @@ const Course = () => {
             <img src={course.thumbnail} alt='image' width="100" />
             
           </li>
-        ))}
+        ))
+      ) : ( 
+        <li>No course available</li>)}
       </ul>
     </div>
   );
