@@ -17,7 +17,7 @@ const Login = () => {
   //   e.preventDefault();
 
   //   try {
-  //     const response = await axios.get('http://localhost:5000/users');
+  //     const response = await axios.get('https://coding-pathshala.vercel.app/users');
   //     const users = response.data;
   //     const user = users.find(user => user.email === email && user.password === password);
 
@@ -47,7 +47,7 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.get('http://localhost:5000/users');
+        const response = await axios.get('https://coding-pathshala.vercel.app/users');
         const users = response.data;
         const user = users.find(user => user.email === values.email && user.password === values.password);
 
