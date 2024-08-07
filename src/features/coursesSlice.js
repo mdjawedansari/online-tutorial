@@ -1,77 +1,73 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 
 // Thunks
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
   try {
-    const response = await axios.get(apiUrl);
-    console.log('Response:', response);
-    console.log('Response data:', response.data);
+    const response = await fetch(apiUrl);
     
-    // Check if response data is JSON
-    if (typeof response.data !== 'object' || response.data === null) {
-      // Attempt to parse response if it's a string
-      try {
-        return JSON.parse(JSON.stringify(response.data));
-      } catch (e) {
-        throw new Error('Response is not valid JSON');
-      }
+    // Check if response is OK (status in the range 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.data;
-
+    
+    const data = await response.json(); // Parse JSON
+    
+    // Validate that data is an array or object
+    if (typeof data !== 'object' || data === null) {
+      throw new Error('Response is not valid JSON');
+    }
+    
+    return data;
   } catch (error) {
-    if (error.response) {
-      console.error('Error response data:', error.response.data);
-      console.error('Error response status:', error.response.status);
-      console.error('Error response headers:', error.response.headers);
-    } else {
-      console.error('Error message:', error.message);
-    }
+    console.error('Error fetching courses:', error.message);
     throw error;
   }
 });
 
 export const addCourse = createAsyncThunk('courses/addCourse', async (course) => {
   try {
-    const response = await axios.post(apiUrl, course);
-    console.log('Add Course Response:', response);
-    console.log('Add Course Data:', response.data);
-
-    if (typeof response.data !== 'object' || response.data === null) {
-      try {
-        return JSON.parse(JSON.stringify(response.data));
-      } catch (e) {
-        throw new Error('Response is not valid JSON');
-      }
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(course),
+    });
+    
+    // Check if response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.data;
+    
+    const data = await response.json(); // Parse JSON
+    
+    if (typeof data !== 'object' || data === null) {
+      throw new Error('Response is not valid JSON');
+    }
+    
+    return data;
   } catch (error) {
-    if (error.response) {
-      console.error('Error response data:', error.response.data);
-      console.error('Error response status:', error.response.status);
-      console.error('Error response headers:', error.response.headers);
-    } else {
-      console.error('Error message:', error.message);
-    }
+    console.error('Error adding course:', error.message);
     throw error;
   }
 });
 
 export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (courseId) => {
   try {
-    await axios.delete(`${apiUrl}/${courseId}`);
-    console.log('Delete Course successful for ID:', courseId);
+    const response = await fetch(`${apiUrl}/${courseId}`, {
+      method: 'DELETE',
+    });
+    
+    // Check if response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
     return courseId;
   } catch (error) {
-    if (error.response) {
-      console.error('Error response data:', error.response.data);
-      console.error('Error response status:', error.response.status);
-      console.error('Error response headers:', error.response.headers);
-    } else {
-      console.error('Error message:', error.message);
-    }
+    console.error('Error deleting course:', error.message);
     throw error;
   }
 });
