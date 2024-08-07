@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 import Signup from './components/Auth/Signup';
 import Profile from './pages/Profile';
 import toast, { Toaster } from 'react-hot-toast';
-// import Course from './pages/Course';
-// import CreateCourse from './pages/CreateCourse';
+import Course from './pages/Course';
+import CreateCourse from './pages/CreateCourse';
 
 const App = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -25,8 +25,8 @@ const App = () => {
         {/* <Route path="/contact" element={Contact} /> */}
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/courses" element={<Course />} /> */}
-        {/* <Route path="/addcourse" element={<CreateCourse />} /> */}
+        <Route path="/courses" element={<Course />} />
+        <Route path="/addcourse" element={<CreateCourse />} />
         {/* <Route path="/admin-dashboard" element={ <AdminDashboard />} /> */}
         {/* <Route path="/admin-dashboard/addcourse" element={
           isAuthenticated && user.role === 'admin' ? (
