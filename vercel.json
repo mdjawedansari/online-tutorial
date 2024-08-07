@@ -1,7 +1,10 @@
 {
     "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
-    ],
+    {
+      "source": "/courses",
+      "destination": "/api/courses"
+    }
+  ],
     "headers": [
     {
       "source": "/courses",
