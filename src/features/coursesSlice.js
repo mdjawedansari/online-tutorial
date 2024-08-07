@@ -5,20 +5,39 @@ const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 
 // Thunks
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
-  const response = await fetch(apiUrl);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await axios.get(apiUrl);
+    if (typeof response.data !== 'object') {
+      throw new Error('Response is not JSON');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching courses:', error.message);
+    throw error;
+  }
 });
 
 export const addCourse = createAsyncThunk('courses/addCourse', async (course) => {
-  const response = await fetch(apiUrl, course);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await axios.post(apiUrl, course);
+    if (typeof response.data !== 'object') {
+      throw new Error('Response is not JSON');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error adding course:', error.message);
+    throw error;
+  }
 });
 
 export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (courseId) => {
-  await axios.delete(`${apiUrl}/${courseId}`);
-  return courseId;
+  try {
+    await axios.delete(`${apiUrl}/${courseId}`);
+    return courseId;
+  } catch (error) {
+    console.error('Error deleting course:', error.message);
+    throw error;
+  }
 });
 
 // Slice
@@ -37,7 +56,7 @@ const coursesSlice = createSlice({
       })
       .addCase(fetchCourses.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.courses = action.payload;
+        state.courses = Array.isArray(action.payload) ? action.payload : [];
       })
       .addCase(fetchCourses.rejected, (state, action) => {
         state.status = 'failed';
