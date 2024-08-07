@@ -10,7 +10,7 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
     if (typeof response.data !== 'object') {
       throw new Error('Response is not JSON');
     }
-    console.log(response.data)
+    console.log(data)
     return response.data;
     
   } catch (error) {
