@@ -3,22 +3,24 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 
 // Thunks
-export const fetchCourses = createAsyncThunk('/courses/fetchCourses', async () => {
+export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
   try {
     const response = await fetch(apiUrl);
-    
+
     // Check if response is OK (status in the range 200-299)
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
     }
-    
+
+    // Check if response content type is JSON
+    const contentType = response.headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Response is not JSON');
+    }
+
     const data = await response.json(); // Parse JSON
-    console.log("data:", data)
-    // Validate that data is an array or object
-    // if (typeof data !== 'object' || data === null) {
-    //   throw new Error('Response is not valid JSON');
-    // }
-    
+
     return data;
   } catch (error) {
     console.error('Error fetching courses:', error.message);
@@ -35,18 +37,21 @@ export const addCourse = createAsyncThunk('courses/addCourse', async (course) =>
       },
       body: JSON.stringify(course),
     });
-    
+
     // Check if response is OK
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
     }
-    
+
+    // Check if response content type is JSON
+    const contentType = response.headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Response is not JSON');
+    }
+
     const data = await response.json(); // Parse JSON
-    
-    if (typeof data !== 'object' || data === null) {
-      throw new Error('Response is not valid JSON');
-    }
-    
+
     return data;
   } catch (error) {
     console.error('Error adding course:', error.message);
@@ -59,12 +64,13 @@ export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (cour
     const response = await fetch(`${apiUrl}/${courseId}`, {
       method: 'DELETE',
     });
-    
+
     // Check if response is OK
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorText}`);
     }
-    
+
     return courseId;
   } catch (error) {
     console.error('Error deleting course:', error.message);
