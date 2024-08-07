@@ -20,7 +20,8 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
     }
 
     const data = await response.json(); // Parse JSON
-
+    console.log("data: " , data);
+    
     return data;
   } catch (error) {
     console.error('Error fetching courses:', error.message);
