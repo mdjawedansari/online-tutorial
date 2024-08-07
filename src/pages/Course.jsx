@@ -28,7 +28,14 @@ const Course = () => {
       <ul>
         {Array.isArray(courses) && courses.length > 0 ? (
           courses.map((course) => (
-            <li key={course.id}>{course.title}</li>
+            <li key={course.id}>
+              <h2><strong>Title:</strong> {course.title}</h2>
+              <p><strong>Description:</strong> {course.description}</p>
+              <p><strong>Category:</strong> {course.category}</p>
+              <p><strong>Created By:</strong> {course.createdBy}</p>
+              <img src={course.thumbnail} alt={course.title} width="100" />
+            </li>
+            
           ))
         ) : (
           <li>No courses available</li>

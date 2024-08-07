@@ -17,7 +17,7 @@ const Signup = () => {
 
   //   try {
   //     // Store user data in db.json
-  //     await axios.post('https://coding-pathshala.vercel.app/users', userData);
+  //     await axios.post('http://localhost:5000/users', userData);
 
   //     // Save the current user in local storage for login purposes
   //     localStorage.setItem('authData', JSON.stringify(userData));
@@ -50,7 +50,7 @@ const Signup = () => {
       try {
         const userData = { ...values, role: 'user' };
         // Store user data in db.json
-        await axios.post('https://coding-pathshala.vercel.app/users', userData);
+        await axios.post('http://localhost:5000/users', userData);
 
         // Save the current user in local storage for login purposes
         localStorage.setItem('authData', JSON.stringify(userData));
