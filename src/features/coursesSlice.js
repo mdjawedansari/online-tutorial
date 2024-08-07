@@ -7,12 +7,17 @@ const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
   try {
     const response = await axios.get(apiUrl);
-    console.log(response);
-    console.log(response.data);
-    
-    
+    console.log('fetchCourses response:', response);
+    console.log('fetchCourses data:', response.data);
+
+    // Validate and parse response data
     if (typeof response.data !== 'object') {
-      throw new Error('Response is not JSON');
+      // In case the response is a string that needs to be parsed
+      try {
+        return JSON.parse(response.data);
+      } catch (e) {
+        throw new Error('Response is not valid JSON');
+      }
     }
     return response.data;
     
@@ -25,8 +30,17 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
 export const addCourse = createAsyncThunk('courses/addCourse', async (course) => {
   try {
     const response = await axios.post(apiUrl, course);
+    console.log('addCourse response:', response);
+    console.log('addCourse data:', response.data);
+
+    // Validate and parse response data
     if (typeof response.data !== 'object') {
-      throw new Error('Response is not JSON');
+      // In case the response is a string that needs to be parsed
+      try {
+        return JSON.parse(response.data);
+      } catch (e) {
+        throw new Error('Response is not valid JSON');
+      }
     }
     return response.data;
   } catch (error) {
@@ -38,6 +52,7 @@ export const addCourse = createAsyncThunk('courses/addCourse', async (course) =>
 export const deleteCourse = createAsyncThunk('courses/deleteCourse', async (courseId) => {
   try {
     await axios.delete(`${apiUrl}/${courseId}`);
+    console.log('deleteCourse successful for ID:', courseId);
     return courseId;
   } catch (error) {
     console.error('Error deleting course:', error.message);
