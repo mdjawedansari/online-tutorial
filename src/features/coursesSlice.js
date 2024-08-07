@@ -7,10 +7,13 @@ const apiUrl = 'https://coding-pathshala.vercel.app/courses';
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
   try {
     const response = await axios.get(apiUrl);
+    console.log(response);
+    console.log(response.data);
+    
+    
     if (typeof response.data !== 'object') {
       throw new Error('Response is not JSON');
     }
-    console.log(response)
     return response.data;
     
   } catch (error) {
