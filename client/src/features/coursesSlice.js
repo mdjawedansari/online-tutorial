@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const apiUrl = 'https://coding-pathshala.vercel.app/courses';
+const apiUrl = 'http://localhost:3000/courses';
 
 // Thunks
 export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () => {
@@ -20,7 +20,7 @@ export const fetchCourses = createAsyncThunk('courses/fetchCourses', async () =>
     }
 
     const data = await response.json(); // Parse JSON
-    console.log("data: " , data);
+    console.log("data: ", data);
     
     return data;
   } catch (error) {

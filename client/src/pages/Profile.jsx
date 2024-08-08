@@ -1,39 +1,21 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfile } from '../features/authSlice.js'; // Adjust path
 import toast from 'react-hot-toast';
 
-const Signup = () => {
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+const Profile = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user); // Fetch user from Redux
+  const userId = user?.id; // Ensure user ID is available
 
-  // const handleSignup = async (e) => {
-  //   e.preventDefault();
-  //   const userData = { username, email, password };
-
-  //   try {
-  //     // Store user data in db.json
-  //     await axios.post('https://coding-pathshala.vercel.app/users', userData);
-
-  //     // Save the current user in local storage for login purposes
-  //     localStorage.setItem('authData', JSON.stringify(userData));
-
-  //     alert('Registration successful!');
-  //     navigate('/login');
-  //   } catch (error) {
-  //     console.error('Error registering user:', error);
-  //     alert('Registration failed!');
-  //   }
-  // };
   const formik = useFormik({
     initialValues: {
-      username: '',
-      email: '',
-      password: '',
+      username: user?.username || '',
+      email: user?.email || '',
+      password: '', // Optional
     },
     validationSchema: Yup.object({
       username: Yup.string()
@@ -44,28 +26,31 @@ const Signup = () => {
         .required('Required'),
       password: Yup.string()
         .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{6,}$/, 'Must contain at least one uppercase letter, one special character, one digit, and be at least 6 characters long')
-        .required('Required'),
+        .optional(),
     }),
     onSubmit: async (values) => {
       try {
-        const userData = { ...values, role: 'user' };
-        // Store user data in db.json
-        await axios.post('https://coding-pathshala.vercel.app/users', userData);
+        const updatedUser = { ...values };
+        if (values.password === '') {
+          delete updatedUser.password; // Remove if not updated
+        }
+        
+        // Update profile
+        const response = await axios.put(`http://localhost:3000/users/${userId}`, updatedUser);
 
-        // Save the current user in local storage for login purposes
-        localStorage.setItem('authData', JSON.stringify(userData));
-        toast.success('Registration successful!')
-        navigate('/login');
+        // Update in Redux store
+        dispatch(updateProfile(response.data));
+        toast.success('Profile updated successfully!');
       } catch (error) {
-        console.error('Error registering user:', error);
-        toast.error('Registration failed!');
+        console.error('Error updating profile:', error);
+        toast.error('Profile update failed!');
       }
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-6">Signup</h2>
+      <h2 className="text-2xl font-bold mb-6">Update Profile</h2>
       <div className="mb-4">
         <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
         <input
@@ -91,7 +76,7 @@ const Signup = () => {
         ) : null}
       </div>
       <div className="mb-4">
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password (optional)</label>
         <input
           type="password"
           id="password"
@@ -102,13 +87,9 @@ const Signup = () => {
           <div className="text-red-500 text-sm">{formik.errors.password}</div>
         ) : null}
       </div>
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">Signup</button>
-      <div className="flex gap-1 justify-center mt-2">
-        <p className="text-gray-700 font-medium">Already have an account?</p>
-        <p className="text-sky-500 font-bold underline"><Link to="/login">Login</Link></p>
-      </div>
+      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">Update Profile</button>
     </form>
   );
 };
 
-export default Signup;
+export default Profile;
